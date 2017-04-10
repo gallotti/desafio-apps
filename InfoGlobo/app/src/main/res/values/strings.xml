@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">InfoGlobo</string>
+    <string name="wait">Aguarde...</string>
+    <string name="att">Atenção</string>
+    <string name="success">Sucesso</string>
+    <string name="error_connect">Problema na conexão.</string>
+</resources>
