@@ -1,6 +1,6 @@
 package infoglobo.com.br.infoglobo;
 
-import android.app.Activity;
+import android.support.test.annotation.UiThreadTest;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.ListView;
 
@@ -9,25 +9,41 @@ import android.widget.ListView;
  */
 
 public class MainActivityTest extends
-        ActivityInstrumentationTestCase2<Activity> {
+        ActivityInstrumentationTestCase2<MainActivity> {
 
-    final ListView list = (ListView) mActivity.findViewById(R.id.listId);
+    private MainActivity mainActivity;
+    private ListView listView;
 
-    assertNotNull("The list was not loaded",list);
+    public MainActivityTest() {
+        super(MainActivity.class);
+    }
 
-    getInstrumentation().
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
+        mainActivity = getActivity();
+        listView = (ListView)mainActivity.findViewById(R.id.list_content);
+    }
 
-    runOnMainSync(new Runnable() {
+    public void testPreconditions() {
+        assertNotNull("button is null",listView);
+    }
+
+    @UiThreadTest
+    public void testListClick() {
+
+        getInstrumentation().runOnMainSync(new Runnable() {
         @Override
         public void run () {
 
-            list.performItemClick(list.getAdapter().getView(position, null, null),
-                    position, list.getAdapter().getItemId(position));
+            listView.performItemClick(listView.getAdapter().getView(1, null, null),
+                    1, listView.getAdapter().getItemId(1));
         }
 
     });
 
-    getInstrumentation().
+        getInstrumentation().waitForIdleSync();
 
-    waitForIdleSync();
+    }
+
 }
